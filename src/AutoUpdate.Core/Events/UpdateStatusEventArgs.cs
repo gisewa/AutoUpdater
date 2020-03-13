@@ -43,6 +43,7 @@ namespace AutoUpdate.Core.Events
     /// 下载信息统计
     /// </summary>
     public class DownloadStatisticsEventArgs : EventArgs {
+
         public DateTime Remaining { get; set; }
 
         public string Speed { get; set; }

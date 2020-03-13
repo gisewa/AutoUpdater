@@ -34,7 +34,6 @@ namespace AutoUpdate.Core.Update
 
     }
 
-
     public sealed class UpdateOption<T> : UpdateOption
     {
         internal UpdateOption(int id, string name)

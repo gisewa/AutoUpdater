@@ -10,7 +10,6 @@ namespace AutoUpdate.Core.Strategys
 {
     public class Silent : AbstractStrategy, IStrategy
     {
-        public IUpdateConfiguration Configuration { get; }
         private UpdatePacket _updatePacket;
         private Action<object, UpdateStatusEventArgs> _eventAction;
 

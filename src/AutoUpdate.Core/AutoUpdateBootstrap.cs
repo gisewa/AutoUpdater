@@ -90,28 +90,25 @@ namespace AutoUpdate.Core
 
             if (string.IsNullOrWhiteSpace(PacketName))
             {
-                throw new NullReferenceException("packetName not set");
+                throw new NullReferenceException("packet name not set");
             }
 
             if (string.IsNullOrWhiteSpace(DownloadPath))
             {
-                throw new NullReferenceException("downloadPath not set");
+                throw new NullReferenceException("download path not set");
             }
 
             if (string.IsNullOrWhiteSpace(InstallPath))
             {
-                throw new NullReferenceException("installPath not set");
+                throw new NullReferenceException("install path not set");
             }
 
             if (string.IsNullOrWhiteSpace(MD5))
             {
-                throw new NullReferenceException("installPath not set");
+                throw new NullReferenceException("install path not set");
             }
 
             return this;
         }
-
-        public override AutoUpdateBootstrap Clone() => new AutoUpdateBootstrap(this);
-
     }
 }

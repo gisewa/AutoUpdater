@@ -7,8 +7,8 @@
     <ProjectGuid>{20596140-9ADB-4591-808B-5F2531B942E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jpdate.Core</RootNamespace>
-    <AssemblyName>Jpdate.Core</AssemblyName>
+    <RootNamespace>AutoUpdate.Core</RootNamespace>
+    <AssemblyName>AutoUpdate.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -49,29 +49,15 @@
     <Compile Include="Abstracts\AbstractConstant.cs" />
     <Compile Include="Abstracts\AbstractStrategy.cs" />
     <Compile Include="Abstracts\ConstantPool.cs" />
-    <Compile Include="Configs\OnilneConfig.cs" />
     <Compile Include="Models\FileBase.cs" />
     <Compile Include="Events\UpdateStatusEventArgs.cs" />
-    <Compile Include="Interfaces\IBootstrap.cs" />
     <Compile Include="Interfaces\IConstant.cs" />
-    <Compile Include="Interfaces\IData.cs" />
-    <Compile Include="Interfaces\IExplain.cs" />
     <Compile Include="Interfaces\IFile.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
-    <Compile Include="Interfaces\IPacket.cs" />
-    <Compile Include="Interfaces\IUpdateCommand.cs" />
     <Compile Include="Interfaces\IUpdateConfiguration.cs" />
-    <Compile Include="Interfaces\IVersion.cs" />
     <Compile Include="AutoUpdateBootstrap.cs" />
-    <Compile Include="Models\Enumerate.cs" />
-    <Compile Include="Models\ErrorMessage.cs" />
-    <Compile Include="Models\Explain.cs" />
-    <Compile Include="Strategys\Online.cs" />
     <Compile Include="Strategys\Silent.cs" />
-    <Compile Include="Models\UpdateFile.cs" />
     <Compile Include="Models\UpdatePacket.cs" />
-    <Compile Include="Models\UpdateRequest.cs" />
-    <Compile Include="Models\UpdateRespons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Update\UpdateOption.cs" />
     <Compile Include="Utils\FileUtil.cs" />
@@ -80,9 +66,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="Configs\explain.json" />
-    <None Include="Configs\file_version.json" />
-    <None Include="Configs\update_config.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

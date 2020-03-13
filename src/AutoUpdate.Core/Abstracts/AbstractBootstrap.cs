@@ -25,6 +25,7 @@ namespace AutoUpdate.Core.Abstracts
         private DateTime _startTime = new DateTime();
         private UpdatePacket _packet;
         private IStrategy strategy;
+        private const string DefultFormat = "zip";
 
         public delegate void UpdateStatusEventHandler(object sender, UpdateStatusEventArgs e);
         public event UpdateStatusEventHandler UpdateStatusChanged;
@@ -83,8 +84,7 @@ namespace AutoUpdate.Core.Abstracts
             Contract.Requires(option != null);
             if (value == null)
             {
-                UpdateOptionValue removed;
-                this.options.TryRemove(option, out removed);
+                this.options.TryRemove(option, out UpdateOptionValue removed);
             }
             else
             {
@@ -102,31 +102,8 @@ namespace AutoUpdate.Core.Abstracts
             return default;
         }
 
-        protected static void SetChannelOptions(IStrategy strategy, UpdateOptionValue[] options)
-        {
-            foreach (var e in options)
-            {
-                SetChannelOption(strategy, e);
-            }
-        }
-
-        protected static void SetChannelOption(IStrategy strategy, UpdateOptionValue option)
-        {
-            try
-            {
-                if (!option.Set(strategy.Configuration))
-                {
-                    //logger.Warn("Unknown channel option '{}' for channel '{}'", option.Option, channel);
-                }
-            }
-            catch (Exception ex)
-            {
-                //logger.Warn("Failed to set channel option '{}' with value '{}' for channel '{}'", option.Option, option, channel, ex);
-            }
-        }
-
         public virtual TBootstrap Launch() {
-            var pacektFormat = GetOption(UpdateOption.Format) ?? "zip";
+            var pacektFormat = GetOption(UpdateOption.Format) ?? DefultFormat;
             Packet.Format = $".{pacektFormat}";
             webClient.DownloadFileAsync(new Uri(Packet.Url), $"{Packet.TempPath}{Packet.Format}");
             return (TBootstrap)this;
@@ -136,12 +113,10 @@ namespace AutoUpdate.Core.Abstracts
         {
             var interval = DateTime.Now - _startTime;
 
-            //下载速度
             var downLoadSpeed = interval.Seconds < 1
                 ? StatisticsUtil.ToUnit(Packet.ReceivedBytes)
                 : StatisticsUtil.ToUnit(Packet.ReceivedBytes / interval.Seconds);
 
-            //剩余时间
             var size = (Packet.TotalBytes - Packet.ReceivedBytes) / (1024 * 1024);
             var remainingTime = new DateTime().AddSeconds(Convert.ToDouble(size));
 
@@ -163,37 +138,32 @@ namespace AutoUpdate.Core.Abstracts
 
             var args = new DownloadProgressChangedExEventArgs();
             args.ProgressValue = value;
-            args.ReceivedSize = e.BytesReceived / (1024.0 * 1024.0);
-            args.TotalSize = e.TotalBytesToReceive / (1024.0 * 1024.0);
+            args.ReceivedSize = e.BytesReceived / (1024 * 1024);
+            args.TotalSize = e.TotalBytesToReceive / (1024 * 1024);
             DownloadProgressChangedEx(this, args);
         }
 
         /// <summary>
-        /// 下载完成
+        /// download completed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            //停止下载信息统计
             _speedTimer.Dispose();
             _speedTimer = null;
 
-            //触发进度事件
-            UpdateStatusEventArgs args = new UpdateStatusEventArgs();
+            var args = new UpdateStatusEventArgs();
             args.Status = "Completed";
             args.Code = 200;
             DoStatusEvent(this,args);
 
-            //执行策略
-            DoExcute();
+            ExcuteStrategy();
         }
 
         protected void DoStatusEvent(object sender,UpdateStatusEventArgs eventArgs) {
             UpdateStatusChanged(sender, eventArgs);
         }
-
-        public abstract TBootstrap Clone();
 
         #region Strategy
 
@@ -209,7 +179,7 @@ namespace AutoUpdate.Core.Abstracts
             return strategy;
         }
 
-        IStrategy DoExcute()
+        IStrategy ExcuteStrategy()
         {
             var strategy = this.InitStrategy();
             strategy.Excute();

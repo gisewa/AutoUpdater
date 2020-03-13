@@ -1,11 +1,5 @@
-﻿using AutoUpdate.Core.Abstracts;
-using AutoUpdate.Core.Events;
-using AutoUpdate.Core.Models;
+﻿using AutoUpdate.Core.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoUpdate.Core.Interfaces
 {
@@ -25,6 +19,5 @@ namespace AutoUpdate.Core.Interfaces
         /// <param name="file">策略需要根据文件进行处理</param>
         void Create(IFile file,Action<object,UpdateStatusEventArgs> eventAction);
 
-        IUpdateConfiguration Configuration { get; }
     }
 }

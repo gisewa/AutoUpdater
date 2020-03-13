@@ -1,11 +1,4 @@
-﻿using AutoUpdate.Core.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoUpdate.Core.Models
+﻿namespace AutoUpdate.Core.Models
 {
     public sealed class UpdatePacket : FileBase
     {
@@ -19,6 +12,9 @@ namespace AutoUpdate.Core.Models
         /// </summary>
         public long? TotalBytes { get; set; }
 
+        /// <summary>
+        /// 进度值
+        /// </summary>
         public int ProgressValue { get; set; }
 
         /// <summary>
@@ -26,6 +22,9 @@ namespace AutoUpdate.Core.Models
         /// </summary>
         public string Url { get; set; }
 
+        /// <summary>
+        /// 更新包文件格式
+        /// </summary>
         public string Format { get; set; }
     }
 }
