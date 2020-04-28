@@ -90,7 +90,7 @@ namespace AutoUpdate.Core.Bootstrap
                 }
                 else
                 {
-                    Logger.Error($"check update fail:{ info.Message }");
+                    ProgressChanged(this, new Update.ProgressChangedEventArgs { Type = ProgressType.Check, Message = $"check update fail:{ info.Message }" });
                 }
             }
             var pacektFormat = GetOption(UpdateOption.Format) ?? DefultFormat;
@@ -235,7 +235,7 @@ namespace AutoUpdate.Core.Bootstrap
             }
             catch (Exception ex)
             {
-                Logger.Error($"Dispose timer error:{ ex.Message }.");
+                ProgressChanged(this, new Update.ProgressChangedEventArgs { Type = ProgressType.Check, Message = $"Dispose timer error:{ ex.Message }." });
             }
             finally 
             {

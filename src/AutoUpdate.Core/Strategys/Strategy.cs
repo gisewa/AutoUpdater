@@ -59,7 +59,6 @@ namespace AutoUpdate.Core.Strategys
             }
             catch (Exception ex)
             {
-                Logger.Error($"StartMain error:{ex.Message}.",ex);
                 return false;
             }
             finally 

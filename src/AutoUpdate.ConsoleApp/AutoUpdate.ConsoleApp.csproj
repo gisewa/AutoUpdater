@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoUpdate.Core\AutoUpdate.Core.csproj">
+      <Project>{35bff228-5ee4-49a6-b721-fb0122e967a0}</Project>
+      <Name>AutoUpdate.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
