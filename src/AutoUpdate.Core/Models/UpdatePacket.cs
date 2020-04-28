@@ -1,7 +1,15 @@
-﻿namespace AutoUpdate.Core.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AutoUpdate.Core.Models
 {
     public sealed class UpdatePacket : FileBase
     {
+        public string MainApp { get; set; }
+
         /// <summary>
         /// 下载接收的大小
         /// </summary>
@@ -26,5 +34,10 @@
         /// 更新包文件格式
         /// </summary>
         public string Format { get; set; }
+
+        /// <summary>
+        /// 是否强制更新
+        /// </summary>
+        public bool IsForcibly { get; set; }
     }
 }

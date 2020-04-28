@@ -2,21 +2,73 @@
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SevenZip;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace AutoUpdate.Core.Utils
 {
-
     internal static class FileUtil
     {
         internal const string SubKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{655A2DE6-C9A3-432E-951B-D773791C2653}_is1";
 
-        public static List<FileBase> GetFeils(string packetPath) {
+        private static string dll7z = $"{AppDomain.CurrentDomain.BaseDirectory}Dlls\\7z.dll";
+
+        private static long UnzipPosition { get; set; }
+
+        private static int TotalCount { get; set; }
+
+        private static Action<object, Update.ProgressChangedEventArgs> ProgressChangedAction;
+
+        /// <summary>
+        /// 解压zip文件
+        /// Copyright belongs to https://archive.codeplex.com/?p=sevenzipsharp
+        /// </summary>
+        /// <param name="zipfilepath"></param>
+        /// <param name="unzippath"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static bool UnZip(string zipfilepath, string unzippath, Action<object, Update.ProgressChangedEventArgs> action) {
+            try
+            {
+                ProgressChangedAction = action;
+                //bool isx64 = Environment.Is64BitOperatingSystem;
+                SevenZipExtractor.SetLibraryPath(dll7z);
+                var extractor = new SevenZipExtractor(zipfilepath);
+                TotalCount = extractor.ArchiveFileData.Count;
+                extractor.FileExtractionStarted += OnFileExtractionStarted;
+                extractor.ExtractArchive(unzippath);
+            }
+            catch (Exception ex)
+            {
+                ProgressChangedAction(null, new Update.ProgressChangedEventArgs
+                {
+                    Message = ex.Message
+                });
+                return false;
+            }
+
+            return true;
+        }
+
+        private static void OnFileExtractionStarted(object sender, FileInfoEventArgs e)
+        {
+            var fileName = e.FileInfo.FileName;
+            UnzipPosition++;
+            ProgressChangedAction(null, new Update.ProgressChangedEventArgs
+            {
+                TotalSize = TotalCount,
+                ProgressValue = UnzipPosition,
+                Type = Update.ProgressType.Updatefile,
+                Message = e.FileInfo.FileName
+            });
+        }
+
+        public static List<FileBase> GetFiles(string packetPath)
+        {
             if (!Directory.Exists(packetPath)) return null;
 
             List<FileBase> lstFile = new List<FileBase>();
@@ -48,7 +100,7 @@ namespace AutoUpdate.Core.Utils
         {
             try
             {
-                ZipFile.ExtractToDirectory(filePath, tempPath);
+                System.IO.Compression.ZipFile.ExtractToDirectory(filePath, tempPath);
                 File.Delete(filePath);
                 return true;
             }
@@ -69,9 +121,8 @@ namespace AutoUpdate.Core.Utils
             Directory.Delete(sourceDir);
         }
 
-
-
-        public static JObject ConfigurationBulider(string jsonPath) {
+        public static JObject ConfigurationBulider(string jsonPath)
+        {
             using (System.IO.StreamReader file = System.IO.File.OpenText(jsonPath))
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
@@ -138,6 +189,8 @@ namespace AutoUpdate.Core.Utils
                     DirectoryCopy(subdir.FullName, temppath, true, isOverWrite, action);
                 }
             }
+
+            Directory.Delete(sourceDirName, true);
         }
 
         internal static string GetTempDirectory()
@@ -149,7 +202,7 @@ namespace AutoUpdate.Core.Utils
 
         internal static void UpdateReg(RegistryKey baseKey, string subKey, string keyName, string keyValue)
         {
-            using (var registry = new RegistryHepler(baseKey, subKey))
+            using (var registry = new RegistryUtil(baseKey, subKey))
             {
                 if (!String.IsNullOrEmpty(registry.Read(keyName)))
                 {
@@ -159,7 +212,7 @@ namespace AutoUpdate.Core.Utils
         }
     }
 
-    public class RegistryHepler : IDisposable
+    public class RegistryUtil : IDisposable
     {
         #region Private Members
         private readonly RegistryKey _baseRegistryKey;
@@ -171,7 +224,7 @@ namespace AutoUpdate.Core.Utils
 
         #region Public Properties
 
-        public RegistryHepler(RegistryKey baseKey, string subKey)
+        public RegistryUtil(RegistryKey baseKey, string subKey)
         {
             _baseRegistryKey = baseKey;
             _subKey = subKey;
@@ -257,5 +310,4 @@ namespace AutoUpdate.Core.Utils
         #endregion
 
     }
-
 }

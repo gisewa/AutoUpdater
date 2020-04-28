@@ -1,91 +1,93 @@
-﻿using AutoUpdate.Core.Abstracts;
-using AutoUpdate.Core.Interfaces;
+﻿using AutoUpdate.Core.Bootstrap;
 using AutoUpdate.Core.Models;
+using AutoUpdate.Core.Strategys;
 using AutoUpdate.Core.Utils;
 using System;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace AutoUpdate.Core
 {
-    public sealed class AutoUpdateBootstrap : AbstractBootstrap<AutoUpdateBootstrap, IStrategy>
+    public class AutoUpdateBootstrap : AbstractBootstrap<AutoUpdateBootstrap, IStrategy>
     {
-        public int Port { get; set; }
-        public string Host { get; set; }
+        /// <summary>
+        /// 更新包名称
+        /// </summary>
         public string PacketName { get; set; }
+
+        /// <summary>
+        /// 更新包下载路径
+        /// </summary>
         public string DownloadPath { get; set; }
+
+        /// <summary>
+        /// 安装目录（更新包解压路径）
+        /// </summary>
         public string InstallPath { get; set; }
+
+        /// <summary>
+        /// 更新包MD5码
+        /// </summary>
         public string MD5 { get; set; }
-        public string Version { get; set; }
-        public string LocalVersion { get; set; }
 
-        public AutoUpdateBootstrap() : base() {
-            
-        }
+        /// <summary>
+        /// 最新版本
+        /// </summary>
+        public string NewVersion { get; set; }
 
-        public AutoUpdateBootstrap(AbstractBootstrap<AutoUpdateBootstrap, IStrategy> bootstrap) : base(bootstrap)
+        /// <summary>
+        /// 当前版本
+        /// </summary>
+        public string CurrentVersion { get; set; }
+
+        /// <summary>
+        /// 更新日志网页地址
+        /// </summary>
+        public string UpdateLogUrl { get; set; }
+
+        /// <summary>
+        /// 是否强制更新
+        /// </summary>
+        public bool IsForcibly { get; set; }
+
+        public string UpdateCheckUrl { get; set; }
+
+        public AutoUpdateBootstrap() : base()
         {
-            this.Packet = bootstrap.Packet;
         }
 
-        public AutoUpdateBootstrap RemoteAddress(string configjsonPath)
-        {
-            var json = FileUtil.ConfigurationBulider(configjsonPath);
-            var host = json["Host"].ToString();
-            var post = Convert.ToInt32(json["Port"]);
-            var packetName = json["PacketName"].ToString();
-            var downloadPath = json["DownloadPath"].ToString();
-            var installPath = json["InstallPath"].ToString();
-            var md5 = json["MD5"].ToString();
-            var version = json["Version"].ToString();
-
-            this.Host = host;
-            this.Port = post;
-            this.PacketName = packetName;
-            this.DownloadPath = downloadPath;
-            this.InstallPath = installPath;
-            this.MD5 = md5;
-            this.Version = version;
-            this.ValidateRemoteAddress();
-            InitPacket();
-            return this;
-        }
-
-        public AutoUpdateBootstrap RemoteAddress(
-            string host, int port, string version,
-            string packetName, string downloadPath,
-            string installPath,string md5)
-        {
-            this.Host = host;
-            this.Port = port;
-            this.PacketName = $"{packetName}";
-            this.DownloadPath = downloadPath;
-            this.InstallPath = installPath;
-            this.MD5 = md5;
-            this.Version = version;
-            this.ValidateRemoteAddress();
-            InitPacket();
-            return this;
-        }
-
-        private void InitPacket() {
+        /// <summary>
+        /// 初始化更新信息
+        /// </summary>
+        private void Init() {
             Packet = new UpdatePacket();
-            Packet.Url = $"http://{Host}:{Port}/{PacketName}.zip";
+            Packet.Url = DownloadPath;
             Packet.TempPath = $"{FileUtil.GetTempDirectory()}\\{PacketName}";
-            Packet.Path = InstallPath;
+            Packet.InstallPath = InstallPath;
             Packet.Name = PacketName;
             Packet.MD5 = MD5;
+            Packet.CurrentVersion = CurrentVersion;
+            Packet.NewVersion = NewVersion;
             base.Packet = this.Packet;
+            base.UpdateCheckUrl = this.UpdateCheckUrl;
         }
 
-        public AutoUpdateBootstrap ValidateRemoteAddress()
-        {
-            if (string.IsNullOrWhiteSpace(Host))
-            {
-                throw new NullReferenceException("host not set");
-            }
+        /// <summary>
+        /// 验证地址
+        /// </summary>
+        private void ValidateRemoteAddress(string[] args = null, int elementNum = 6) {
 
-            if (Port == 0)
+            if (args != null)
             {
-                throw new NullReferenceException("port not set");
+                if (args.Length == 0)
+                {
+                    throw new NullReferenceException("Args does not contain any elements.");
+                }
+
+                if (args.Length > elementNum)
+                {
+                    throw new Exception($"The number of args cannot be greater than { elementNum }");
+                }
             }
 
             if (string.IsNullOrWhiteSpace(PacketName))
@@ -107,8 +109,83 @@ namespace AutoUpdate.Core
             {
                 throw new NullReferenceException("install path not set");
             }
+        }
 
+        /// <summary>
+        /// 配置远程地址
+        /// </summary>
+        /// <param name="args">
+        /// 1.当前版本号（0.9.0.0）
+        /// 2.升级版本号（1.0.0.0）
+        /// 3.更新描述URL（https://github.com/WELL-E）
+        /// 4.更新包文件的URL（http://localhost：9090/UpdateFile.zip）
+        /// 5.更新了文件发布路径（E:\PlatformPath）
+        /// 6.更新程序包文件MD5代码（2b406701f8ad92922feb537fc789561a）
+        /// </param>
+        public AutoUpdateBootstrap RemoteAddress(string[] args) {
+            CurrentVersion = args[0];
+            NewVersion = args[1];
+            UpdateLogUrl = args[2];
+            DownloadPath = args[3];
+            InstallPath = args[4].Replace("|", " ");
+            MD5 = args[5];
+
+            var pos = DownloadPath.LastIndexOf('/');
+            PacketName = DownloadPath.Substring(pos + 1);
+            ValidateRemoteAddress(args);
+            Init();
             return this;
+        }
+
+        /// <summary>
+        /// 配置远程地址
+        /// </summary>
+        /// <param name="remoteUrl">请求更新url 例如："https://api.com/AutoUpdate?version=1.0.0.1"</param>
+        public AutoUpdateBootstrap RemoteAddress(string updateCheckUrl) {
+            if (string.IsNullOrWhiteSpace(updateCheckUrl))
+            {
+                throw new NullReferenceException("Remote url not set.");
+            }
+
+            if (!IsURL(updateCheckUrl))
+            {
+                throw new NullReferenceException("The URL is not legal.");
+            }
+
+            UpdateCheckUrl = updateCheckUrl;
+            InstallPath = System.Environment.CurrentDirectory;
+            var pos = updateCheckUrl.LastIndexOf('=');
+            CurrentVersion = updateCheckUrl.Substring(pos + 1);
+            Init();
+            return this;
+        }
+
+        /// <summary>
+        /// 正则表达式判断该地址是否合法
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private static bool IsURL(string url)
+        {
+            string check = @"((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?";
+            Regex regex = new Regex(check);
+            return regex.IsMatch(url);
+        }
+
+        /// <summary>
+        /// 启动主程序
+        /// </summary>
+        public bool StartMain(string appName) {
+            try
+            {
+                Process.Start($"{InstallPath}/{appName}.exe");
+                Process.GetCurrentProcess().Kill();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

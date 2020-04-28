@@ -1,9 +1,14 @@
-﻿using AutoUpdate.Core.Interfaces;
+﻿using AutoUpdate.Core.Update;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoUpdate.Core.Models
 {
-    public enum FileStatus { 
+    public enum FileStatus
+    {
         Remove = 0,
         New = 1,
         Update = 2,
@@ -57,7 +62,7 @@ namespace AutoUpdate.Core.Models
         /// <summary>
         /// 安装路径
         /// </summary>
-        public string Path { get; set; }
+        public string InstallPath { get; set; }
 
         /// <summary>
         /// 下载文件临时存储路径
