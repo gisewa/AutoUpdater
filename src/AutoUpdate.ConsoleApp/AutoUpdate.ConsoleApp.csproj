@@ -50,8 +50,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoUpdate.Core\GeneralUpdate.Core.csproj">
-      <Project>{35BFF228-5EE4-49A6-B721-FB0122E967A0}</Project>
+    <ProjectReference Include="..\GeneralUpdate.Core\GeneralUpdate.Core.csproj">
+      <Project>{35bff228-5ee4-49a6-b721-fb0122e967a0}</Project>
       <Name>GeneralUpdate.Core</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,57 +1,89 @@
-<div align="center">
-   <a href="https://github.com/WELL-E/AutoUpdater">
-     <img alt="JC Update" width="200" heigth="200" src="https://raw.githubusercontent.com/WELL-E/AutoUpdater/master/img/jc_update_new.png"></img>
-   </a>
- <p>
-    This is a Wpf-based automatic update application to help developers better complete the update function.
-  </p>
-</div>
+GeneralUpdate
 
 
 ---------------
 
-### Description:
+### 简介:
 
-WPF & MVVM
+GeneralUpdate是基于https://github.com/WELL-E/AutoUpdater Branch:Master进行升级开发的。
 
-- Support for update package file verification (comparison file MD5 code) 
-- Support for distinguishing between x86 and x64 programs
-- Support for the version number of the updater
-- Support for performing update strategies
+为什么会改名称，是因为在nuget上有重名的项目再者就是新版本更新不仅限于wpf程序的更新讲更新的核心部分抽离出来方便大家使用并
+应用于多种项目当中目前适用于wpf，控制台应用，winfrom。相比以前更方便的是不需要在过分关注源码可直接通过nuget直接使用。
 
-### Usage:
+开发作者： [JusterZhu](https://github.com/JusterZhu)  &  [WELL-E](https://github.com/WELL-E)
 
-Program startup requires 6 parameters
+### 使用方式:
 
-1. Current version number (0.9.0.0)
-2. Upgraded version number (1.0.0.0)
-3. Update description URL (https://github.com/WELL-E)
-4. Update package file URL（ http://localhost:9090/UpdateFile.zip）
-5. Updated file release path (E:\PlatformPath)
-6. Update package file MD5 code (2b406701f8ad92922feb537fc789561a)
+    Launch1
+           string args = new string[6] {
+                "0.0.0.0",
+                "1.1.1.1",
+                "https://github.com/WELL-E",
+                 "http://192.168.225.225:7000/update.zip",
+                 @"E:\PlatformPath",
+                "509f0ede227de4a662763a4abe3d8470",
+                 };
 
-For parameters such as debugging, the parameters can be set to：`0.9.0.0 1.0.0.0 https://github.com/WELL-E http://localhost:9090/UpdateFile.zip E:\PlatformPath 2b406701f8ad92922feb537fc789561a`
+            GeneralUpdateBootstrap bootstrap = new GeneralUpdateBootstrap();
+            bootstrap.DownloadStatistics += Bootstrap_DownloadStatistics; ;
+            bootstrap.ProgressChanged += Bootstrap_ProgressChanged; ;
+            bootstrap.Strategy<DefultStrategy>().
+                Option(UpdateOption.Format, "zip").
+                Option(UpdateOption.MainApp, "your application name").
+                RemoteAddress(args).
+                Launch();
+	     
+    Launch2
 
-**annotate：** `http://localhost:9090/UpdateFile.zip`
+        GeneralUpdateBootstrap bootstrap2 = new GeneralUpdateBootstrap();
+        bootstrap2.DownloadStatistics += OnDownloadStatistics;
+        bootstrap2.ProgressChanged += OnProgressChanged;
+        bootstrap2.Strategy<DefultStrategy>().
+            Option(UpdateOption.Format, "zip").
+            Option(UpdateOption.MainApp, "KGS.CPP").
+            RemoteAddress(@"https://api.com/GeneralUpdate?version=1.0.0.1").
+            Launch();
 
-- `http://localhost:9090/`：File server address built for yourself
-- UpdateFile.zip：Update package file name
 
-If you have any questions，QQ Group:130108655
+       private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.Type == ProgressType.Updatefile)
+            {
+                var str = $"当前更新第：{e.ProgressValue}个,更新文件总数：{e.TotalSize}";
+                Console.WriteLine(str);
+            }
 
-### Screenshots:
+            if (e.Type == ProgressType.Done)
+            {
+                Console.WriteLine("更新完成");
+            }
+        }
 
-![](http://i.imgur.com/oWcbNhb.png)
+        private void OnDownloadStatistics(object sender, DownloadStatisticsEventArgs e)
+        {
+            Console.WriteLine($"下载速度：{e.Speed}，剩余时间：{e.Remaining.Minute}:{e.Remaining.Second}");
+        }
 
-### Special thanks:
-@[JusterZhu](https://github.com/JusterZhu)
 
-### Acknowledgements:
-
-- MahApps.Metro: [https://github.com/MahApps/MahApps.Metro](https://github.com/MahApps/MahApps.Metro "https://github.com/MahApps/MahApps.Metro")
-- Source of software icon: [https://www.iconfinder.com/icons/314711/cloud_download_icon#size=128](https://www.iconfinder.com/icons/314711/cloud_download_icon#size=128 "https://www.iconfinder.com/icons/314711/cloud_download_icon#size=128")
-
-### License:
+### 开源协议:
 
 Open sourced under the MIT license.
+
+### 联系我们：
+
+QQ群： 
+
+- 	WELL-E
+	- 	1群 130108655
+	- 	2群 960655709
+	- 	Git: https://github.com/WELL-E
+
+
+- 	juster.chu
+	- 	E-Mail：zhuzhen723723@outlook.com
+	- 	QQ: 580749909(个人群)
+	- 	Blog： https://www.cnblogs.com/justzhuzhu/
+	- 	Git: https://github.com/JusterZhu
+
+
 

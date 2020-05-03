@@ -31,7 +31,7 @@ namespace AutoUpdate.WpfApp.ViewModels
             bootstrap.ProgressChanged += Bootstrap_ProgressChanged; ;
             bootstrap.Strategy<DefultStrategy>().
                 Option(UpdateOption.Format, "zip").
-                Option(UpdateOption.MainApp, "KGS.CPP").
+                Option(UpdateOption.MainApp, "your application name").
                 RemoteAddress(args).
                 Launch();
 
