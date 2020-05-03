@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoUpdate.Core.Utils
+namespace GeneralUpdate.Core.Utils
 {
     public class HttpUtil
     {
@@ -43,8 +43,7 @@ namespace AutoUpdate.Core.Utils
                 }
             }
             catch (Exception ex)
-            {
-                //LogManager.Error("HTTP GET请求异常：" + ex.StackTrace);
+            { 
                 return default(T);
             }
             finally

@@ -2,20 +2,22 @@
 using GeneralUpdate.Core.Strategys;
 using GeneralUpdate.Core.Update;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AutoApdate.ConsoleApp
+namespace AutoUpdate.WpfApp.ViewModels
 {
-    class Program
+    public class MainViewModel
     {
-        /// <summary>
-        /// quick start
-        /// </summary>
-        /// <param name="args"></param>
-        static void Main(string[] args)
-        {
-            #region Launch1
+        public MainViewModel() {
+            Start();
+        }
 
-            args = new string[6] {
+        public void Start() {
+
+           var args = new string[6] {
                 "0.0.0.0",
                 "1.1.1.1",
                 "https://github.com/WELL-E",
@@ -25,33 +27,17 @@ namespace AutoApdate.ConsoleApp
                  };
 
             GeneralUpdateBootstrap bootstrap = new GeneralUpdateBootstrap();
-            bootstrap.DownloadStatistics += OnDownloadStatistics;
-            bootstrap.ProgressChanged += OnProgressChanged;
+            bootstrap.DownloadStatistics += Bootstrap_DownloadStatistics; ;
+            bootstrap.ProgressChanged += Bootstrap_ProgressChanged; ;
             bootstrap.Strategy<DefultStrategy>().
                 Option(UpdateOption.Format, "zip").
                 Option(UpdateOption.MainApp, "KGS.CPP").
                 RemoteAddress(args).
                 Launch();
 
-            #endregion
-
-            #region Launch2
-
-            //GeneralUpdateBootstrap bootstrap2 = new GeneralUpdateBootstrap();
-            //bootstrap2.DownloadStatistics += OnDownloadStatistics;
-            //bootstrap2.ProgressChanged += OnProgressChanged;
-            //bootstrap2.Strategy<DefultStrategy>().
-            //    Option(UpdateOption.Format, "zip").
-            //    Option(UpdateOption.MainApp, "KGS.CPP").
-            //    RemoteAddress(@"https://api.com/GeneralUpdate?version=1.0.0.1").
-            //    Launch();
-
-            #endregion
-
-            Console.Read();
         }
 
-        private static void OnProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Bootstrap_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             if (e.Type == ProgressType.Updatefile)
             {
@@ -65,7 +51,7 @@ namespace AutoApdate.ConsoleApp
             }
         }
 
-        private static void OnDownloadStatistics(object sender, DownloadStatisticsEventArgs e)
+        private void Bootstrap_DownloadStatistics(object sender, DownloadStatisticsEventArgs e)
         {
             Console.WriteLine($"下载速度：{e.Speed}，剩余时间：{e.Remaining.Minute}:{e.Remaining.Second}");
         }

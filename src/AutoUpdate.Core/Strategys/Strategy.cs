@@ -1,12 +1,12 @@
-﻿using AutoUpdate.Core.Models;
-using AutoUpdate.Core.Update;
-using AutoUpdate.Core.Utils;
+﻿using GeneralUpdate.Core.Models;
+using GeneralUpdate.Core.Update;
+using GeneralUpdate.Core.Utils;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace AutoUpdate.Core.Strategys
+namespace GeneralUpdate.Core.Strategys
 {
     /// <summary>
     /// 默认策略实现
@@ -24,14 +24,14 @@ namespace AutoUpdate.Core.Strategys
 
         public void Excute()
         {
-            var isVerify = VerifyFileMd5($"{_updatePacket.TempPath}{_updatePacket.Name}", _updatePacket.MD5);
+            var isVerify = VerifyFileMd5($"{_updatePacket.TempPath}", _updatePacket.MD5);
             if (!isVerify)
             {
                 _eventAction(this, new Update.ProgressChangedEventArgs() { Type = ProgressType.Fail, Message = "Verify MD5 Error!" });
                 return;
             }
 
-            if (FileUtil.UnZip($"{ _updatePacket.TempPath }{_updatePacket.Name}", _updatePacket.TempPath, _eventAction))
+            if (FileUtil.UnZip($"{ _updatePacket.TempPath }", _updatePacket.InstallPath, _eventAction))
             {
                 var isDone = UpdateFiles();
                 _eventAction(this, new Update.ProgressChangedEventArgs() { Type = isDone ? ProgressType.Done : ProgressType.Fail });

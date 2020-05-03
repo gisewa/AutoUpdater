@@ -8,7 +8,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace AutoUpdate.Core.Utils
+namespace GeneralUpdate.Core.Utils
 {
     using System;
     using System.Collections;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoUpdate.WpfApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoUpdate.WpfApp
+namespace GeneralUpdate.WpfApp
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -23,6 +24,7 @@ namespace AutoUpdate.WpfApp
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
     }
 }

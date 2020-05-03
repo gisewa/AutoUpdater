@@ -1,7 +1,7 @@
-﻿<Application x:Class="AutoUpdate.WpfApp.App"
+﻿<Application x:Class="GeneralUpdate.WpfApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AutoUpdate.WpfApp"
+             xmlns:local="clr-namespace:GeneralUpdate.WpfApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

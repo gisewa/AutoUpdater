@@ -1,11 +1,11 @@
-﻿using AutoUpdate.Core.Update;
+﻿using GeneralUpdate.Core.Update;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoUpdate.Core.Models
+namespace GeneralUpdate.Core.Models
 {
     public enum FileStatus
     {

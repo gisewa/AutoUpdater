@@ -1,7 +1,7 @@
-﻿using AutoUpdate.Core.Models;
-using AutoUpdate.Core.Strategys;
-using AutoUpdate.Core.Update;
-using AutoUpdate.Core.Utils;
+﻿using GeneralUpdate.Core.Models;
+using GeneralUpdate.Core.Strategys;
+using GeneralUpdate.Core.Update;
+using GeneralUpdate.Core.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Diagnostics.Contracts;
 using System.Net;
 using System.Threading;
 
-namespace AutoUpdate.Core.Bootstrap
+namespace GeneralUpdate.Core.Bootstrap
 {
     public abstract class AbstractBootstrap<TBootstrap, TStrategy>
            where TBootstrap : AbstractBootstrap<TBootstrap, TStrategy>
@@ -97,7 +97,7 @@ namespace AutoUpdate.Core.Bootstrap
             Packet.Format = $".{pacektFormat}";
             Packet.MainApp = GetOption(UpdateOption.MainApp);
             _speedTimer = new Timer(SpeedTimerOnTick, null, 0, 1000);
-            webClient.DownloadFileAsync(new Uri(Packet.Url), $"{Packet.TempPath}{Packet.Name}");
+            webClient.DownloadFileAsync(new Uri(Packet.Url), $"{Packet.TempPath}");
             return (TBootstrap)this;
         }
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AutoUpdate.Single.Properties {
+namespace GeneralUpdate.Single.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

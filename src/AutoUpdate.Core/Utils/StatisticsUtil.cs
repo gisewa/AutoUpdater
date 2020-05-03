@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace AutoUpdate.Core.Utils
+namespace GeneralUpdate.Core.Utils
 {
     internal static class StatisticsUtil
     {

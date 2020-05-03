@@ -1,4 +1,4 @@
-﻿using AutoUpdate.Core.Models;
+﻿using GeneralUpdate.Core.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,13 +9,14 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace AutoUpdate.Core.Utils
+namespace GeneralUpdate.Core.Utils
 {
     internal static class FileUtil
     {
         internal const string SubKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{655A2DE6-C9A3-432E-951B-D773791C2653}_is1";
 
-        private static string dll7z = $"{AppDomain.CurrentDomain.BaseDirectory}Dlls\\7z.dll";
+        //https://www.7-zip.org/download.html
+        private static string dll7z = $"{AppDomain.CurrentDomain.BaseDirectory}x86\\7z.dll";
 
         private static long UnzipPosition { get; set; }
 
@@ -35,7 +36,6 @@ namespace AutoUpdate.Core.Utils
             try
             {
                 ProgressChangedAction = action;
-                //bool isx64 = Environment.Is64BitOperatingSystem;
                 SevenZipExtractor.SetLibraryPath(dll7z);
                 var extractor = new SevenZipExtractor(zipfilepath);
                 TotalCount = extractor.ArchiveFileData.Count;

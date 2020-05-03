@@ -1,14 +1,14 @@
-﻿using AutoUpdate.Core.Bootstrap;
-using AutoUpdate.Core.Models;
-using AutoUpdate.Core.Strategys;
-using AutoUpdate.Core.Utils;
+﻿using GeneralUpdate.Core.Bootstrap;
+using GeneralUpdate.Core.Models;
+using GeneralUpdate.Core.Strategys;
+using GeneralUpdate.Core.Utils;
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace AutoUpdate.Core
+namespace GeneralUpdate.Core
 {
-    public class AutoUpdateBootstrap : AbstractBootstrap<AutoUpdateBootstrap, IStrategy>
+    public class GeneralUpdateBootstrap : AbstractBootstrap<GeneralUpdateBootstrap, IStrategy>
     {
         /// <summary>
         /// 更新包名称
@@ -52,7 +52,7 @@ namespace AutoUpdate.Core
 
         public string UpdateCheckUrl { get; set; }
 
-        public AutoUpdateBootstrap() : base()
+        public GeneralUpdateBootstrap() : base()
         {
         }
 
@@ -122,7 +122,7 @@ namespace AutoUpdate.Core
         /// 5.更新了文件发布路径（E:\PlatformPath）
         /// 6.更新程序包文件MD5代码（2b406701f8ad92922feb537fc789561a）
         /// </param>
-        public AutoUpdateBootstrap RemoteAddress(string[] args) {
+        public GeneralUpdateBootstrap RemoteAddress(string[] args) {
             CurrentVersion = args[0];
             NewVersion = args[1];
             UpdateLogUrl = args[2];
@@ -140,8 +140,8 @@ namespace AutoUpdate.Core
         /// <summary>
         /// 配置远程地址
         /// </summary>
-        /// <param name="remoteUrl">请求更新url 例如："https://api.com/AutoUpdate?version=1.0.0.1"</param>
-        public AutoUpdateBootstrap RemoteAddress(string updateCheckUrl) {
+        /// <param name="remoteUrl">请求更新url 例如："https://api.com/GeneralUpdate?version=1.0.0.1"</param>
+        public GeneralUpdateBootstrap RemoteAddress(string updateCheckUrl) {
             if (string.IsNullOrWhiteSpace(updateCheckUrl))
             {
                 throw new NullReferenceException("Remote url not set.");

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AutoUpdate.WindowsFormsApp
+namespace GeneralUpdate.WindowsFormsApp
 {
     public partial class Form1 : Form
     {

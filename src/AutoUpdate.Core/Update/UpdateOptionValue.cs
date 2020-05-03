@@ -1,4 +1,4 @@
-﻿namespace AutoUpdate.Core.Update
+﻿namespace GeneralUpdate.Core.Update
 {
     public abstract class UpdateOptionValue
     {

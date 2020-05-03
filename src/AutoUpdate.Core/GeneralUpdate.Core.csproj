@@ -7,11 +7,15 @@
     <ProjectGuid>{35BFF228-5EE4-49A6-B721-FB0122E967A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoUpdate.Core</RootNamespace>
-    <AssemblyName>AutoUpdate.Core</AssemblyName>
+    <RootNamespace>GeneralUpdate.Core</RootNamespace>
+    <AssemblyName>GeneralUpdate.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <PackageId>F35F100D-B8E9-4F20-8572-7AB549913D69</PackageId>
+    <Version>2.0.0</Version>
+    <Authors>juster.chu</Authors>
+    <Company>none</Company>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -33,12 +37,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\Autoupdate.Hub\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="SevenZipSharp, Version=0.64.7416.23849, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dlls\SevenZipSharp.dll</HintPath>
+    <Reference Include="SevenZipSharp, Version=1.0.19.0, Culture=neutral, PublicKeyToken=c8ff6ba0184838bb, processorArchitecture=MSIL">
+      <HintPath>..\packages\SevenZipSharp.Net45.1.0.19\lib\net45\SevenZipSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -57,7 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoUpdateBootstrap.cs" />
+    <Compile Include="GeneralUpdateBootstrap.cs" />
     <Compile Include="Bootstrap\AbstractBootstrap.cs" />
     <Compile Include="Models\FileBase.cs" />
     <Compile Include="Models\UpdateInfo.cs" />
@@ -77,16 +81,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Dlls\7z.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dlls\7z64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dlls\SevenZipSharp.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\7z.Libs.19.00.1\build\net\7z.Libs.targets" Condition="Exists('..\packages\7z.Libs.19.00.1\build\net\7z.Libs.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\7z.Libs.19.00.1\build\net\7z.Libs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\7z.Libs.19.00.1\build\net\7z.Libs.targets'))" />
+  </Target>
 </Project>

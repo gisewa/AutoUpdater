@@ -1,7 +1,7 @@
-﻿using AutoUpdate.Core.Update;
+﻿using GeneralUpdate.Core.Update;
 using System;
 
-namespace AutoUpdate.Core.Strategys
+namespace GeneralUpdate.Core.Strategys
 {
     /// <summary>
     /// 更新策略

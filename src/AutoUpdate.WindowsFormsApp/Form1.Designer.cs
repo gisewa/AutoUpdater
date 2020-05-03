@@ -1,4 +1,4 @@
-﻿namespace AutoUpdate.WindowsFormsApp
+﻿namespace GeneralUpdate.WindowsFormsApp
 {
     partial class Form1
     {

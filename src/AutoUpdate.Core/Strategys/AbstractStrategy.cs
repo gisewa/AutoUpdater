@@ -1,9 +1,9 @@
-﻿using AutoUpdate.Core.Update;
-using AutoUpdate.Core.Utils;
+﻿using GeneralUpdate.Core.Update;
+using GeneralUpdate.Core.Utils;
 using System;
 using System.IO;
 
-namespace AutoUpdate.Core.Strategys
+namespace GeneralUpdate.Core.Strategys
 {
     public class AbstractStrategy
     {

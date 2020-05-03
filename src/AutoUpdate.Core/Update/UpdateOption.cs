@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
 
-namespace AutoUpdate.Core.Update
+namespace GeneralUpdate.Core.Update
 {
     public abstract class UpdateOption : AbstractConstant<UpdateOption>
     {
