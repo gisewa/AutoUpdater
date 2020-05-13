@@ -5,10 +5,19 @@ GeneralUpdate
 
 ### 简介:
 
-GeneralUpdate是基于https://github.com/WELL-E/AutoUpdater Branch:Master进行升级开发的。
+一款基于.net开发的c/s架构自动更新程序。wpf winfrom console均能更新。
+更新不仅限于wpf程序的更新讲更新的核心部分抽离出来方便大家使用并应用于多种项目当中目前适用于wpf，
+控制台应用，winfrom。相比以前更方便的是不需要在过分关注源码可直接通过nuget直接使用。
 
-为什么会改名称，是因为在nuget上有重名的项目再者就是新版本更新不仅限于wpf程序的更新讲更新的核心部分抽离出来方便大家使用并
-应用于多种项目当中目前适用于wpf，控制台应用，winfrom。相比以前更方便的是不需要在过分关注源码可直接通过nuget直接使用。
+github
+
+----------
+
+Nuget地址：https://www.nuget.org/packages/GeneralUpdate.Core/
+
+Gitee地址： https://gitee.com/Juster-zhu/GeneralUpdate 
+
+issues：https://github.com/WELL-E/AutoUpdater/issues
 
 开发作者： [JusterZhu](https://github.com/JusterZhu)  &  [WELL-E](https://github.com/WELL-E)
 
