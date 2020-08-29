@@ -64,6 +64,7 @@
     <Compile Include="GeneralUpdateBootstrap.cs" />
     <Compile Include="Bootstrap\AbstractBootstrap.cs" />
     <Compile Include="Models\FileBase.cs" />
+    <Compile Include="Models\UpdateConfig.cs" />
     <Compile Include="Models\UpdateInfo.cs" />
     <Compile Include="Models\UpdatePacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Utils\FileUtil.cs" />
     <Compile Include="Utils\HttpUtil.cs" />
     <Compile Include="Utils\StatisticsUtil.cs" />
+    <Compile Include="Utils\StringEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
