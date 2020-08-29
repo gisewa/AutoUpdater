@@ -1,6 +1,6 @@
 # GeneralUpdate #
-![](https://img.shields.io/badge/GeneralUpdate.Core.Vsersion-2.2.0-green)
-![](https://img.shields.io/badge/GeneralUpdate.Single.Vsersion-1.0.0-green)
+![](https://img.shields.io/badge/GeneralUpdate.Core-2.1.0-green)
+![](https://img.shields.io/badge/GeneralUpdate.Single-1.0.0-green)
 ![](https://img.shields.io/github/license/WELL-E/AutoUpdater?color=blue)
 ![](https://img.shields.io/github/stars/WELL-E/AutoUpdater?color=blue)
 
@@ -116,8 +116,8 @@ GitHub地址：
 JusterZhu & WELL-E
 
 ## Reward ##
-![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/alipay2.png)
-![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/vx2.png)
+![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/alipay2.jpg)
+![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/vx2.jpg)
 
 ## Contact us ##
 
