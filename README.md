@@ -1,7 +1,5 @@
 # GeneralUpdate #
 
-----------
-
 - GeneralUpdate是基于.net framwork开发的一款（c/s应用）自动升级程序。该组件将更新的核心部分抽离出来方便应用于多种项目当中目前适用于wpf，控制台应用，winfrom。相比以前更方便的是不需要在过分关注源码可直接通过nuget直接使用。
 - 如果有任何使用问题可以在Github的issues上进行提问我会每周统一找时间解决并解答bug或者问题。或者联系文章末尾的联系方式会有人解答。
 - 如果该组件能够帮助到您，希望可以点个Strat和关注一下文档末尾的联系方式。您的支持是对开源作者最大的支持与帮助。--juster
@@ -16,8 +14,6 @@ Nuget地址：
 
 - https://www.nuget.org/packages/GeneralUpdate.Core/
 - https://www.nuget.org/packages/GeneralUpdate.Single/
-
-
 
 GitHub地址：
  
@@ -107,10 +103,14 @@ GitHub地址：
 调试本程序如果没有服务端支持可用hfs这款软件，作为临时服务器进行调试使用方式非常简单下载好了之后界面如下
 
 ![](https://img2020.cnblogs.com/blog/1214710/202005/1214710-20200517175400462-1015101986.png)
-![](https://img2020.cnblogs.com/blog/1214710/202005/1214710-20200517175525111-190800663.png)
+![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/hfs.jpg)
 
 ## Author ##
 JusterZhu & WELL-E
+
+## Reward ##
+![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/alipay.png)
+![](https://github.com/WELL-E/AutoUpdater/blob/autoupdate2/imgs/vx.png)
 
 ## Contact us ##
 
