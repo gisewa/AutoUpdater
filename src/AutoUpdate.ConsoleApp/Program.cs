@@ -66,6 +66,7 @@ namespace AutoApdate.ConsoleApp
             //    Option(UpdateOption.Format, "zip").
             //    Option(UpdateOption.MainApp, "your application name").
             //    RemoteAddress(@"https://api.com/GeneralUpdate?version=1.0.0.1").//指定更新地址
+            //    Option(UpdateOption.DownloadTimeOut, 60).
             //    Launch();
 
             #endregion
