@@ -27,7 +27,7 @@ namespace AutoUpdate.WpfApp
                 "https://github.com/WELL-E",
                  "http://192.168.50.225:7000/update.zip",
                  @"E:\PlatformPath",
-                "509f0ede227de4a662763a4abe3d8470",
+                "371ada8087cf7651eafaadf4fcc214a5",
                  };
             }
             else
@@ -41,6 +41,7 @@ namespace AutoUpdate.WpfApp
                 var win = new MainWindow();
                 var vm = new MainViewModel(resultArgs, win.Close);
                 win.DataContext = vm;
+
                 var application = new Program();
                 application.Run(win);
                 SingleInstance<Program>.Cleanup();
